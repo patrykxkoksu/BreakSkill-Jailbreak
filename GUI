@@ -97,8 +97,8 @@ local function MakeDraggable(topbarobject, object)
 end
 
 function BreakSkill:CreateWindow(text, gamename, maincolor, toclose)
-	CloseBind = toclose or Enum.KeyCode.RightControl
-	PresetColor = maincolor or Color3.fromRGB(66, 134, 255)
+	CloseBind = toclose or Enum.KeyCode.RightShift
+	PresetColor = maincolor or Color3.fromRGB(255, 30, 40)
 	local fs = false
 	local MainFrame = Instance.new("Frame")
 	local MainCorner = Instance.new("UICorner")
