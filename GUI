@@ -60,13 +60,13 @@ coroutine.wrap(function()
 	end
 end)()
 
-local MakeDraggable = function(topbarobject, object)
+local function MakeDraggable(topbarobject, object)
 	local Dragging = nil
 	local DragInput = nil
 	local DragStart = nil
 	local StartPosition = nil
-	
-	local Update = function(input)
+
+	local function Update(input)
 		local Delta = input.Position - DragStart
 		local pos = UDim2.new(StartPosition.X.Scale, StartPosition.X.Offset + Delta.X, StartPosition.Y.Scale, StartPosition.Y.Offset + Delta.Y)
 		object.Position = pos
@@ -96,7 +96,10 @@ local MakeDraggable = function(topbarobject, object)
 	end)
 end
 
-function BreakSkill:CreateWindow(text, gamename, executorname, playername, maincolor, toclose)
+function BreakSkill:CreateWindow(text, gamename, maincolor, toclose)
+	CloseBind = toclose or Enum.KeyCode.RightControl
+	PresetColor = maincolor or Color3.fromRGB(66, 134, 255)
+	local fs = false
 	local MainFrame = Instance.new("Frame")
 	local MainCorner = Instance.new("UICorner")
 	local LeftFrame = Instance.new("Frame")
@@ -104,8 +107,6 @@ function BreakSkill:CreateWindow(text, gamename, executorname, playername, mainc
 	local GlowTabHolder = Instance.new("ImageLabel")
 	local Title = Instance.new("TextLabel")
 	local BottomText = Instance.new("TextLabel")
-	local ExexutorNameText = Instance.new("TextLabel")
-	local PlayerNameText = Instance.new("TextLabel")
 	local TabHold = Instance.new("Frame")
 	local TabLayout = Instance.new("UIListLayout")
 	local Drag = Instance.new("Frame")
@@ -127,11 +128,11 @@ function BreakSkill:CreateWindow(text, gamename, executorname, playername, mainc
 	LeftFrame.Parent = MainFrame
 	LeftFrame.BackgroundColor3 = Color3.fromRGB(47, 49, 54)
 	LeftFrame.Size = UDim2.new(0, 205, 0, 484)
-	
+
 	LeftCorner.CornerRadius = UDim.new(0, 5)
 	LeftCorner.Name = "LeftCorner"
 	LeftCorner.Parent = LeftFrame
-	
+
 	GlowTabHolder.Name = "GlowTabHolder"
 	GlowTabHolder.Parent = LeftFrame
 	GlowTabHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -144,7 +145,7 @@ function BreakSkill:CreateWindow(text, gamename, executorname, playername, mainc
 	GlowTabHolder.ImageColor3 = Color3.fromRGB(15, 15, 15)
 	GlowTabHolder.ScaleType = Enum.ScaleType.Slice
 	GlowTabHolder.SliceCenter = Rect.new(20, 20, 280, 280)
-	
+
 	Title.Name = "Title"
 	Title.Parent = LeftFrame
 	Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -156,7 +157,7 @@ function BreakSkill:CreateWindow(text, gamename, executorname, playername, mainc
 	Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Title.TextSize = 25.000
 	Title.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	BottomText.Name = "BottomText"
 	BottomText.Parent = LeftFrame
 	BottomText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -169,12 +170,49 @@ function BreakSkill:CreateWindow(text, gamename, executorname, playername, mainc
 	BottomText.TextSize = 14.000
 	BottomText.TextTransparency = 0.300
 	BottomText.TextXAlignment = Enum.TextXAlignment.Left
+
+	TabHold.Name = "TabHold"
+	TabHold.Parent = LeftFrame
+	TabHold.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TabHold.BackgroundTransparency = 1.000
+	TabHold.Position = UDim2.new(0, 0, 0.167355374, 0)
+	TabHold.Size = UDim2.new(0, 205, 0, 403)
+
+	TabLayout.Name = "TabLayout"
+	TabLayout.Parent = TabHold
+	TabLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	TabLayout.Padding = UDim.new(0, 3)
+
+	Drag.Name = "Drag"
+	Drag.Parent = MainFrame
+	Drag.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Drag.BackgroundTransparency = 1.000
+	Drag.Position = UDim2.new(0.290368259, 0, 0, 0)
+	Drag.Size = UDim2.new(0, 501, 0, 23)
+
+	ContainerFolder.Name = "ContainerFolder"
+	ContainerFolder.Parent = MainFrame
 	
+	MakeDraggable(Drag, MainFrame)
+	MakeDraggable(LeftFrame, MainFrame)
+	MainFrame:TweenSize(UDim2.new(0, 706, 0, 484), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 	
+	local uitoggled = false
 	
-	CloseBind = toclose or Enum.KeyCode.RightShift
-	PresetColor = maincolor or Color3.fromRGB(255, 30, 40)
-	local fs = false
+	UIS.InputBegan:Connect(function(io, p)
+		if io.KeyCode == CloseBind then
+			if uitoggled == false then
+				MainFrame:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+				uitoggled = true
+				wait(.5)
+				BreakSkillLib.Enabled = false
+			else
+				MainFrame:TweenSize(UDim2.new(0, 706, 0, 484), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+				BreakSkillLib.Enabled = true
+				uitoggled = false
+			end
+		end
+	end)
 end
 
 return BreakSkill
