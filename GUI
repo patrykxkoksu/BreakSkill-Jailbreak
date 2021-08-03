@@ -1,31 +1,34 @@
-local BreakSkill = {RainbowColorValue = 0, HUESelectionPosition = 0}
-local PresetColor = Color3.fromRGB(255, 30, 40)
-local UIS = game:GetService("UserInputService")
-local TS = game:GetService("TweenService")
-local RS = game:GetService("RunService")
-local Client = game:GetService("Players").LocalPlayer
-local Mouse = Client:GetMouse()
-local CloseBind = Enum.KeyCode.RightShift
+local Flux = {RainbowColorValue = 0, HueSelectionPosition = 0}
+local PresetColor = Color3.fromRGB(66, 134, 255)
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
+local CloseBind = Enum.KeyCode.RightControl
 
-local BreakSkillLib = Instance.new("ScreenGui")
-BreakSkillLib.Name = "BreakSkill | Hub"
-BreakSkillLib.Parent = game.CoreGui
-BreakSkillLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+local FluxLib = Instance.new("ScreenGui")
+FluxLib.Name = "FluxLib"
+FluxLib.Parent = game.CoreGui
+FluxLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 
-coroutine.wrap(function()
-	while wait() do
-		BreakSkill.RainbowColorValue = BreakSkill.RainbowColorValue + 1 / 255
-		BreakSkill.HUESelectionPosition = BreakSkill.HUESelectionPosition + 1
-		
-		if BreakSkill.RainbowColorValue >= 1 then
-			BreakSkill.RainbowColorValue = 0
-		end
-		if BreakSkill.HUESelectionPosition == 80 then
-			BreakSkill.HUESelectionPosition = 0
+coroutine.wrap(
+	function()
+		while wait() do
+			Flux.RainbowColorValue = Flux.RainbowColorValue + 1 / 255
+			Flux.HueSelectionPosition = Flux.HueSelectionPosition + 1
+
+			if Flux.RainbowColorValue >= 1 then
+				Flux.RainbowColorValue = 0
+			end
+
+			if Flux.HueSelectionPosition == 80 then
+				Flux.HueSelectionPosition = 0
+			end
 		end
 	end
-end)()
+)()
 
 local function MakeDraggable(topbarobject, object)
 	local Dragging = nil
@@ -35,37 +38,57 @@ local function MakeDraggable(topbarobject, object)
 
 	local function Update(input)
 		local Delta = input.Position - DragStart
-		local pos = UDim2.new(StartPosition.X.Scale, StartPosition.X.Offset + Delta.X, StartPosition.Y.Scale, StartPosition.Y.Offset + Delta.Y)
+		local pos =
+			UDim2.new(
+				StartPosition.X.Scale,
+				StartPosition.X.Offset + Delta.X,
+				StartPosition.Y.Scale,
+				StartPosition.Y.Offset + Delta.Y
+			)
 		object.Position = pos
 	end
-	topbarobject.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			Dragging = true
-			DragStart = input.Position
-			StartPosition = object.Position
-			
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					Dragging = false
-				end
-			end)
+
+	topbarobject.InputBegan:Connect(
+		function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				Dragging = true
+				DragStart = input.Position
+				StartPosition = object.Position
+
+				input.Changed:Connect(
+					function()
+						if input.UserInputState == Enum.UserInputState.End then
+							Dragging = false
+						end
+					end
+				)
+			end
 		end
-	end)
-	topbarobject.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-			DragInput = input
+	)
+
+	topbarobject.InputChanged:Connect(
+		function(input)
+			if
+				input.UserInputType == Enum.UserInputType.MouseMovement or
+					input.UserInputType == Enum.UserInputType.Touch
+			then
+				DragInput = input
+			end
 		end
-	end)
-	UIS.InputChanged:Connect(function(input)
-		if input == DragInput and Dragging then
-			Update(input)
+	)
+
+	UserInputService.InputChanged:Connect(
+		function(input)
+			if input == DragInput and Dragging then
+				Update(input)
+			end
 		end
-	end)
+	)
 end
 
-function BreakSkill:CreateWindow(text, gamename, maincolor, toclose)
-	CloseBind = toclose or Enum.KeyCode.RightShift
-	PresetColor = maincolor or Color3.fromRGB(255, 30, 40)
+function Flux:Window(text, bottom,mainclr,toclose)
+	CloseBind = toclose or Enum.KeyCode.RightControl
+	PresetColor = mainclr or Color3.fromRGB(66, 134, 255)
 	local fs = false
 	local MainFrame = Instance.new("Frame")
 	local MainCorner = Instance.new("UICorner")
@@ -78,19 +101,19 @@ function BreakSkill:CreateWindow(text, gamename, maincolor, toclose)
 	local TabLayout = Instance.new("UIListLayout")
 	local Drag = Instance.new("Frame")
 	local ContainerFolder = Instance.new("Folder")
-	
+
 	MainFrame.Name = "MainFrame"
-	MainFrame.Parent = BreakSkillLib
+	MainFrame.Parent = FluxLib
 	MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	MainFrame.BackgroundColor3 = Color3.fromRGB(50, 53, 59)
 	MainFrame.ClipsDescendants = true
 	MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 	MainFrame.Size = UDim2.new(0, 0, 0, 0)
-	
+
 	MainCorner.CornerRadius = UDim.new(0, 5)
 	MainCorner.Name = "MainCorner"
 	MainCorner.Parent = MainFrame
-	
+
 	LeftFrame.Name = "LeftFrame"
 	LeftFrame.Parent = MainFrame
 	LeftFrame.BackgroundColor3 = Color3.fromRGB(47, 49, 54)
@@ -132,7 +155,7 @@ function BreakSkill:CreateWindow(text, gamename, maincolor, toclose)
 	BottomText.Position = UDim2.new(0.097560972, 0, 0.0889999792, 0)
 	BottomText.Size = UDim2.new(0, 113, 0, 28)
 	BottomText.Font = Enum.Font.Gotham
-	BottomText.Text = gamename
+	BottomText.Text = bottom
 	BottomText.TextColor3 = Color3.fromRGB(255, 255, 255)
 	BottomText.TextSize = 14.000
 	BottomText.TextTransparency = 0.300
@@ -159,27 +182,28 @@ function BreakSkill:CreateWindow(text, gamename, maincolor, toclose)
 
 	ContainerFolder.Name = "ContainerFolder"
 	ContainerFolder.Parent = MainFrame
-	
-	MakeDraggable(Drag, MainFrame)
-	MakeDraggable(LeftFrame, MainFrame)
+
+	MakeDraggable(Drag,MainFrame)
+	MakeDraggable(LeftFrame,MainFrame)
 	MainFrame:TweenSize(UDim2.new(0, 706, 0, 484), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
-	
+
 	local uitoggled = false
-	
-	UIS.InputBegan:Connect(function(io, p)
-		if io.KeyCode == CloseBind then
-			if uitoggled == false then
-				MainFrame:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
-				uitoggled = true
-				wait(.5)
-				BreakSkillLib.Enabled = false
-			else
-				MainFrame:TweenSize(UDim2.new(0, 706, 0, 484), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
-				BreakSkillLib.Enabled = true
-				uitoggled = false
+	UserInputService.InputBegan:Connect(
+		function(io, p)
+			if io.KeyCode == CloseBind then
+				if uitoggled == false then
+					MainFrame:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					uitoggled = true
+					wait(.5)
+					FluxLib.Enabled = false
+				else
+					MainFrame:TweenSize(UDim2.new(0, 706, 0, 484), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					FluxLib.Enabled = true
+					uitoggled = false
+				end
 			end
 		end
-	end)
+	)
 end
 
-return BreakSkill
+return Flux
