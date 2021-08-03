@@ -1,7 +1,35 @@
-
+local exploit_type
 local Client = game:GetService("Players").LocalPlayer
 
+if PROTOSMASHER_LOADED then
+	exploit_type = "ProtoSmasher"
+elseif is_sirhurt_closure then
+	exploit_type = "SirHurt"
+elseif SENTINEL_LOADED then
+	exploit_type = "Sentinel"
+elseif syn then
+	exploit_type = "Synapse X"
+elseif KRNL_LOADED then
+	exploit_type = "KRNL"
+elseif hookfunction_raw and hmjdfk then
+	exploit_type = "Fluxus Mac Free"
 
+	if not getconnections then
+		getgenv().getconnections = function()
+			return {}
+		end
+		getgenv().set_thread_context = function()
+			return
+		end
+		getgenv().fluxus_loaded = true
+	end
+elseif FLUXUS_LOADED then
+	exploit_type = "Fluxus"
+elseif getexecutorname then
+	exploit_type = "Script-Ware"
+else
+	Client:Kick("Your executor is not supported!")
+end
 
 local BreakSkill = {RainbowColorValue = 0, HUESelectionPosition = 0}
 local PresetColor = Color3.fromRGB(255, 30, 40)
