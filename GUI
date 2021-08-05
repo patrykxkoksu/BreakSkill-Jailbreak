@@ -467,9 +467,128 @@ function library:CreateWindow(config, parent)
 			end
 			
 			--[
-			--
+			--AddSlider
 			--]
 			
+			function SectionInit:AddSlider(name, min, max, default, precise, callback)
+				local SliderInit = {}
+				local DefaultLocal = default or 50
+				
+				local Slider = Folder.Slider:Clone()
+				
+				Slider.Name = name .. " S"
+				Slider.Parent = Section.Container
+				Slider.Title.Text = name
+				Slider.Slider.Bar.Size = UDim2.new(min / max, 0, 1, 0)
+				Slider.Slider.Bar.BackgroundColor3 = config.Color
+				Slider.Value.PlaceholderText = tostring(min / max)
+				Slider.Title.Size = UDim2.new(1, 0, 0, Slider.Title.TextBounds.Y + 5)
+				Slider.Size = UDim2.new(1, -10, 0, Slider.Title.TextBounds.Y + 15)
+				
+				table.insert(library.ColorTable, Slider.Slider.Bar)
+				
+				local GlobalSliderValue = 0
+				local Dragging = false
+				
+				local function Sliding(input)
+					local Position = UDim2.new(math.clamp((input.Position.X - Slider.Slider.AbsolutePosition.X) / Slider.Slider.AbsoluteSize.X, 0, 1), 0, 1, 0)
+					Slider.Slider.Bar.Size = Position
+					local SliderPrecise = ((Position.X.Scale * max) / max) * (max - min) + min
+					local SliderNonPrecise = math.floor(((Position.X.Scale * max) / max) * (max - min) + max)
+					local SliderValue = precise and SliderNonPrecise or SliderPrecise
+					SliderValue = tonumber(string.format("%.2f", SliderValue))
+					GlobalSliderValue = SliderValue
+					Slider.Value.PlaceholderText = tostring(SliderValue)
+					callback(GlobalSliderValue)
+				end
+				local function SetValue(value)
+					GlobalSliderValue = value
+					Slider.Slider.Bar.Size = UDim2.new(value / max, 0, 1, 0)
+					Slider.Value.PlaceholderText = value
+					callback(value)
+				end
+				Slider.Value.FocusLost:Connect(function()
+					if not tonumber(Slider.Value.Text) then
+						Slider.Value.Text = GlobalSliderValue
+					elseif Slider.Value.Text == "" or tonumber(Slider.Value.Text) <= min then
+						Slider.Value.Text = min
+					elseif Slider.Value.Text == "" or tonumber(Slider.Value.Text) >= max then
+						Slider.Value.Text = max
+					end
+					GlobalSliderValue = Slider.Value.Text
+					Slider.Slider.Bar.Size = UDim2.new(Slider.Value.Text / max, 0, 1, 0)
+					Slider.Value.PlaceholderText = Slider.Value.Text
+					callback(tonumber(Slider.Value.Text))
+					Slider.Value.Text = ""
+				end)
+				Slider.InputBegan:Connect(function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1  then
+						Sliding(input)
+						Dragging = true
+					end
+				end)
+				Slider.InputEnded:Connect(function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+						Dragging = false
+					end
+				end)
+				UIS.InputBegan:Connect(function(input)
+					if input.KeyCode == Enum.KeyCode.LeftControl then
+						Slider.Value.ZIndex = 4
+					end
+				end)
+				UIS.InputEnded:Connect(function(input)
+					if input.KeyCode == Enum.KeyCode.LeftControl then
+						Slider.Value.ZIndex = 3
+					end
+				end)
+				UIS.InputChanged:Connect(function(input)
+					if Dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+						Sliding(input)
+					end
+				end)
+				
+				--[
+				--Slider AddToolTip
+				--]
+				
+				function SliderInit:AddToolTip(name)
+					if tostring(name):gsub(" ", "") ~= "" then
+						Slider.MouseEnter:Connect(function()
+							Screen.ToolTip.Text = name
+							Screen.ToolTip.Size = UDim2.new(0, Screen.ToolTip.TextBounds.X + 5, 0, Screen.ToolTip.TextBounds.Y + 5)
+							Screen.ToolTip.Visible = true
+						end)
+						Slider.MouseLeave:Connect(function()
+							Screen.ToolTip.Visible = false
+						end)
+					end
+				end
+				
+				--[
+				--Slider SetValue Debug
+				--]
+				
+				if default == nil then
+					function SliderInit:SetValue(value)
+						GlobalSliderValue = value
+						Slider.Slider.Bar.Size = UDim2.new(value / max, 0, 1, 0)
+						Slider.Value.PlaceholderText = value
+						callback(value)
+					end
+				else
+					SetValue(DefaultLocal)
+				end
+				
+				--[
+				--Slider GetValue
+				--]
+				
+				function SliderInit:GetValue(value)
+					return GlobalSliderValue
+				end
+				return SliderInit
+			end
 			return SectionInit
 		end
 		return TabInit
