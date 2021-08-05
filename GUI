@@ -232,6 +232,11 @@ function library:CreateWindow(config, parent)
 				Tab.CanvasSize = UDim2.new(0, 0, 0, Tab.RightSide.ListLayout.AbsoluteContentSize.Y + 10)
 			end
 		end)
+		
+		--[
+		--CreateSection
+		--]
+		
 		function TabInit:CreateSection(name)
 			local SectionInit = {}
 			
@@ -246,6 +251,11 @@ function library:CreateWindow(config, parent)
 			Section.Container.ListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 				Section.Size = UDim2.new(1, 0, 0, Section.Container.ListLayout.AbsoluteContentSize.Y + 15)
 			end)
+			
+			--[
+			--AddLabel
+			--]
+			
 			function SectionInit:AddLabel(name)
 				local Label = Folder.Label:Clone()
 				
@@ -253,6 +263,54 @@ function library:CreateWindow(config, parent)
 				Label.Parent = Section.Container
 				Label.Text = name
 				Label.Size = UDim2.new(1, -10, 0, Label.TextBounds.Y)
+			end
+			
+			--[
+			--AddButton
+			--]
+			
+			function SectionInit:AddButton(name, callback)
+				local ButtonInit = {}
+				
+				local Button = Folder.Button:Clone()
+				
+				Button.Name = name .. " B"
+				Button.Parent = Section.Container
+				Button.Title.Text = name
+				Button.Size = UDim2.new(1, -10, 0, Button.Title.TextBounds.Y + 5)
+				
+				table.insert(library.ColorTable, Button)
+				
+				Button.MouseButton1Down:Connect(function()
+					Button.BackgroundColor3 = config.Color
+				end)
+				Button.MouseButton1Up:Connect(function()
+					Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+				end)
+				Button.MouseLeave:Connect(function()
+					Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+				end)
+				Button.MouseButton1Click:Connect(function()
+					callback()
+				end)
+				
+				--[
+				--Button AddToolTip
+				--]
+				
+				function ButtonInit:AddToolTip(name)
+					if tostring(name):gsub(" ", "") ~= "" then
+						Button.MouseEnter:Connect(function()
+							Screen.ToolTip.Text = name
+							Screen.ToolTip.Size = UDim2.new(0, Screen.ToolTip.TextBounds.X + 5, 0, Screen.ToolTip.TextBounds.Y + 5)
+							Screen.ToolTip.Visible = true
+						end)
+						Button.MouseLeave:Connect(function()
+							Screen.ToolTip.Visible = false
+						end)
+					end
+				end
+				return ButtonInit
 			end
 			return SectionInit
 		end
