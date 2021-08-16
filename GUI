@@ -1,13 +1,3 @@
-local exploit_type
-
-if syn then
-	exploit_type = "Synapse X"
-elseif getexecutorname then
-	exploit_type = "Script-Ware"
-else
-	game:GetService("Players").LocalPlayer:Kick("BreakSkill Hub | Your executor is not supported!")
-end
-
 local library = {
 	Toggle = true,
 	FirstTab = nil,
