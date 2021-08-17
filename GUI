@@ -51,9 +51,9 @@ function library:CreateWindow(config, parent)
 	local Folder = game:GetObjects("rbxassetid://7141683860")[1]
 	local Screen = Folder.Bracket:Clone()
 	
-	if exploit_type == "Synapse X" then
+	if syn then
 		syn.protect_gui(Screen)
-	elseif exploit_type == "Script-Ware" then
+	elseif getexecutorname then
 		gethui(Screen)
 	else
 		game:GetService("Players").LocalPlayer:Kick("BreakSkill Hub | Your executor is not supported!")
