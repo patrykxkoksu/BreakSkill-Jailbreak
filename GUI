@@ -104,7 +104,7 @@ function BreakSkill:DraggingEnabled(frame, parent)
             framePos = parent.Position
 
             input.Changed:Connect(function ()
-                if input.UserInputType == Enum.UserInputType.End then
+                if input.UserInputState == Enum.UserInputState.End then
                     dragging = false
                 end
             end)
