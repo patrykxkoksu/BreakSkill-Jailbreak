@@ -372,6 +372,111 @@ function BreakSkill:CreateWindow(title, themelist)
     local Tabs = {}
     local first = true
 
+    function Tabs:NewTab(name)
+        name = name or "Tab"
+        local tabButton = Instance.new("TextButton")
+        local UICorner = Instance.new("UICorner")
+        local page = Instance.new("ScrollingFrame")
+        local pageListing = Instance.new("UIListLayout")
+
+        local function UpdateSize()
+            local CS = pageListing.AbsoluteContentSize
+            Tween:Create(page, tweeninfo(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {CanvasSize = UDim2.new(0, CS.X, 0, CS.Y)}):Play()
+        end
+
+        page.Name = "Page"
+        page.Parent = Pages
+        page.Active = true
+        page.BackgroundColor3 = themelist.Background
+        page.BorderSizePixel = 0
+        page.Position = UDim2.new(0, 0, -0.00371747208, 0)
+        page.Size = UDim2.new(1, 0, 1, 0)
+        page.ScrollBarThickness = 5
+        page.Visible = false
+        page.ScrollBarImageColor3 = Color3.fromRGB(themelist.SchemeColor.r * 255 - 16, themelist.SchemeColor.g * 255 - 15, themelist.SchemeColor.b * 255 - 28)
+
+        pageListing.Name = "pageListing"
+        pageListing.Parent = page
+        pageListing.SortOrder = Enum.SortOrder.LayoutOrder
+        pageListing.Padding = UDim.new(0, 5)
+
+        tabButton.Name = name.."TabButton"
+        tabButton.Parent = tabFrames
+        tabButton.BackgroundColor3 = themelist.SchemeColor
+        Objects[tabButton] = "SchemeColor"
+        tabButton.Size = UDim2.new(0, 135, 0, 28)
+        tabButton.AutoButtonColor = false
+        tabButton.Font = Enum.Font.Gotham
+        tabButton.Text = name
+        tabButton.TextColor3 = themelist.TextColor
+        Objects[tabButton] = "TextColor3"
+        tabButton.TextSize = 14.000
+        tabButton.BackgroundTransparency = 1
+
+        if first then
+            first = false
+            page.Visible = true
+            tabButton.BackgroundTransparency = 0
+            UpdateSize()
+        else
+            page.Visible = false
+            tabButton.BackgroundTransparency = 1
+        end
+
+        UICorner.CornerRadius = UDim.new(0, 5)
+        UICorner.Parent = tabButton
+
+        table.insert(Tabs, name)
+        UpdateSize()
+
+        page.ChildAdded:Connect(UpdateSize)
+        page.ChildRemoved:Connect(UpdateSize)
+
+        tabButton.MouseButton1Click:Connect(function ()
+            UpdateSize()
+
+            for i, v in next, Pages:GetChildren() do
+                v.Visible = false
+            end
+
+            page.Visible = true
+
+            for i, v in next, tabFrames:GetChildren() do
+                if v:IsA("TextButton") then
+                    if themelist.SchemeColor == Color3.fromRGB(255, 255, 255) then
+                        Utility:TweenObject(v, {TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
+                    end
+                    if themelist.SchemeColor == Color3.fromRGB(0, 0, 0) then
+                        Utility:TweenObject(v, {TextColor3 = Color3.fromRGB(0, 0, 0)}, 0.2)
+                    end
+                    Utility:TweenObject(v, {BackgroundTransparency = 1}, 0.2)
+                end
+            end
+            if themelist.SchemeColor == Color3.fromRGB(255, 255, 255) then
+                Utility:TweenObject(tabButton, {TextColor3 = Color3.fromRGB(0, 0, 0)}, 0.2)
+            end
+            if themelist.SchemeColor == Color3.fromRGB(0, 0, 0) then
+                Utility:TweenObject(tabButton, {TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
+            end
+            Utility:TweenObject(tabButton, {BackgroundTransparency = 0}, 0.2)
+        end)
+        
+        local Sections = {}
+        local focusing = false
+        local viewDe = false
+
+        coroutine.wrap(function ()
+            while wait() do
+                page.BackgroundColor3 = themelist.Background
+                page.ScrollBarImageColor3 = Color3.fromRGB(themelist.SchemeColor.r * 255 - 16, themelist.SchemeColor.g * 255 - 15, themelist.SchemeColor.b * 255 - 28)
+                tabButton.TextColor3 = themelist.TextColor
+                tabButton.BackgroundColor3 = themelist.SchemeColor
+            end
+        end)()
+
+        return Sections
+    end
+
     return Tabs
 end
 
