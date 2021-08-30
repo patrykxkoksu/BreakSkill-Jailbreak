@@ -213,6 +213,7 @@ function BreakSkill:CreateWindow(title, themelist)
     local MainHeader = Instance.new("Frame")
     local HeaderCover = Instance.new("UICorner")
     local CoverUp = Instance.new("Frame")
+    local Title = Instance.new("TextLabel")
 
     ScreenGui.Name = title
     ScreenGui.Parent = game.CoreGui
@@ -247,6 +248,19 @@ function BreakSkill:CreateWindow(title, themelist)
     CoverUp.BorderSizePixel = 0
     CoverUp.Position = UDim2.new(0, 0, 0.758620679, 0)
     CoverUp.Size = UDim2.new(0, 550, 0, 7)
+
+    Title.Name = "Title"
+    Title.Parent = MainHeader
+    Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Title.BackgroundTransparency = 1
+    Title.BorderSizePixel = 0
+    Title.Position = UDim2.new(0.0171428565, 0, 0.344827592, 0)
+    Title.Size = UDim2.new(0, 205, 0, 8)
+    Title.Font = Enum.Font.SourceSansBold
+    Title.RichText = title
+    Title.TextColor3 = Color3.fromRGB(245, 245, 245)
+    Title.TextSize = 16
+    Title.TextXAlignment = Enum.TextXAlignment.Left
 end
 
 return BreakSkill
