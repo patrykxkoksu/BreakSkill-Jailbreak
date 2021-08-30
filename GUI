@@ -214,6 +214,7 @@ function BreakSkill:CreateWindow(title, themelist)
     local HeaderCover = Instance.new("UICorner")
     local CoverUp = Instance.new("Frame")
     local Title = Instance.new("TextLabel")
+    local Close = Instance.new("ImageButton")
 
     ScreenGui.Name = title
     ScreenGui.Parent = game.CoreGui
@@ -261,6 +262,24 @@ function BreakSkill:CreateWindow(title, themelist)
     Title.TextColor3 = Color3.fromRGB(245, 245, 245)
     Title.TextSize = 16
     Title.TextXAlignment = Enum.TextXAlignment.Left
+
+    Close.Name = "Close"
+    Close.Parent = MainHeader
+    Close.BackgroundTransparency = 1
+    Close.Position = UDim2.new(0.949999988, 0, 0.137999997, 0)
+    Close.Size = UDim2.new(0, 21, 0, 21)
+    Close.ZIndex = 2
+    Close.Image = "rbxassetid://3926305904"
+    Close.ImageRectOffset = Vector2.new(284, 4)
+    Close.ImageRectSize = Vector2.new(24, 24)
+
+    Close.MouseButton1Click:Connect(function ()
+        Tween:Create(Close, tweeninfo(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {ImageTransparency = 1}):Play()
+        wait()
+        Tween:Create(Main, tweeninfo(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0, 0, 0), Position = UDim2.new(0, Main.AbsolutePosition.X + (Main.AbsoluteSize.X / 2), 0, Main.AbsolutePosition.Y + (Main.AbsoluteSize.Y / 2))}):Play()
+        wait(1)
+        ScreenGui:Destroy()
+    end)
 end
 
 return BreakSkill
