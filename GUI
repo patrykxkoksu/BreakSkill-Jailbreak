@@ -216,6 +216,7 @@ function BreakSkill:CreateWindow(title, themelist)
     local Title = Instance.new("TextLabel")
     local Close = Instance.new("ImageButton")
     local MainSide = Instance.new("Frame")
+    local SideCorner = Instance.new("UICorner")
 
     ScreenGui.Name = title
     ScreenGui.Parent = game.CoreGui
@@ -288,6 +289,12 @@ function BreakSkill:CreateWindow(title, themelist)
     Objects[MainSide] = "Header"
     MainSide.Position = UDim2.new(-7.4505806e-09, 0, 0.0911949649, 0)
     MainSide.Size = UDim2.new(0, 149, 0, 289)
+
+    SideCorner.CornerRadius = UDim.new(0, 4)
+    SideCorner.Name = "SideCorner"
+    SideCorner.Parent = MainSide
+
+    
 end
 
 return BreakSkill
