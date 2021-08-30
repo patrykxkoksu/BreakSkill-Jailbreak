@@ -210,6 +210,7 @@ function BreakSkill:CreateWindow(title, themelist)
     local ScreenGui = Instance.new("ScreenGui")
     local Main = Instance.new("Frame")
     local MainCorner = Instance.new("UICorner")
+    local MainHeader = Instance.new("Frame")
 
     ScreenGui.Name = title
     ScreenGui.Parent = game.CoreGui
@@ -227,7 +228,11 @@ function BreakSkill:CreateWindow(title, themelist)
     MainCorner.Name = "MainCorner"
     MainCorner.Parent = Main
 
-    
+    MainHeader.Name = "MainHeader"
+    MainHeader.Parent = Main
+    MainHeader.BackgroundColor3 = themelist.Header
+    Objects[MainHeader] = "BackgroundColor3"
+    MainHeader.Size = UDim2.new(0, 550, 0, 29)
 end
 
 return BreakSkill
