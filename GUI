@@ -215,6 +215,7 @@ function BreakSkill:CreateWindow(title, themelist)
     local CoverUp = Instance.new("Frame")
     local Title = Instance.new("TextLabel")
     local Close = Instance.new("ImageButton")
+    local MainSide = Instance.new("Frame")
 
     ScreenGui.Name = title
     ScreenGui.Parent = game.CoreGui
@@ -280,6 +281,13 @@ function BreakSkill:CreateWindow(title, themelist)
         wait(1)
         ScreenGui:Destroy()
     end)
+
+    MainSide.Name = "MainSide"
+    MainSide.Parent = Main
+    MainSide.BackgroundColor3 = themelist.Header
+    Objects[MainSide] = "Header"
+    MainSide.Position = UDim2.new(-7.4505806e-09, 0, 0.0911949649, 0)
+    MainSide.Size = UDim2.new(0, 149, 0, 289)
 end
 
 return BreakSkill
