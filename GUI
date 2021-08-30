@@ -212,6 +212,7 @@ function BreakSkill:CreateWindow(title, themelist)
     local MainCorner = Instance.new("UICorner")
     local MainHeader = Instance.new("Frame")
     local HeaderCover = Instance.new("UICorner")
+    local CoverUp = Instance.new("Frame")
 
     ScreenGui.Name = title
     ScreenGui.Parent = game.CoreGui
@@ -238,6 +239,14 @@ function BreakSkill:CreateWindow(title, themelist)
     HeaderCover.CornerRadius = UDim.new(0, 4)
     HeaderCover.Name = "HeaderCover"
     HeaderCover.Parent = MainHeader
+
+    CoverUp.Name = "Coverup"
+    CoverUp.Parent = MainHeader
+    CoverUp.BackgroundColor3 = themelist.Header
+    Objects[CoverUp] = "BackgroundColor3"
+    CoverUp.BorderSizePixel = 0
+    CoverUp.Position = UDim2.new(0, 0, 0.758620679, 0)
+    CoverUp.Size = UDim2.new(0, 550, 0, 7)
 end
 
 return BreakSkill
