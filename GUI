@@ -209,6 +209,7 @@ function BreakSkill:CreateWindow(title, themelist)
 
     local ScreenGui = Instance.new("ScreenGui")
     local Main = Instance.new("Frame")
+    local MainCorner = Instance.new("UICorner")
 
     ScreenGui.Name = title
     ScreenGui.Parent = game.CoreGui
@@ -221,6 +222,12 @@ function BreakSkill:CreateWindow(title, themelist)
     Main.ClipsDescendants = true
     Main.Position = UDim2.new(0.336503863, 0, 0.275485456, 0)
     Main.Size = UDim2.new(0, 550, 0, 450)
+
+    MainCorner.CornerRadius = UDim.new(0, 4)
+    MainCorner.Name = "MainCorner"
+    MainCorner.Parent = Main
+
+    
 end
 
 return BreakSkill
