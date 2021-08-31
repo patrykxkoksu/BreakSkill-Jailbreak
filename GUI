@@ -122,6 +122,13 @@ local Themes = {
         Header = Color3.fromRGB(22, 29, 31),
         TextColor = Color3.fromRGB(255, 255, 255),
         ElementColor = Color3.fromRGB(22, 29, 31)
+    },
+    BreakSkill = {
+        SchemeColor = Color3.fromRGB(230, 35, 69),
+        Background = Color3.fromRGB(11, 11, 18),
+        Header = Color3.fromRGB(74, 74, 74),
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        ElementColor = Color3.fromRGB(24, 24, 24)
     }
 }
 
@@ -182,6 +189,8 @@ function BreakSkill:CreateWindow(title, themelist)
         themelist = Themes.Synapse
     elseif themelist == "Serpent" then
         themelist = Themes.Serpent
+    elseif themelist == "BreakSkill" then
+        themelist = Themes.BreakSkill
     else
         if themelist.SchemeColor == nil then
             themelist.SchemeColor = Color3.fromRGB(74, 99, 135)
