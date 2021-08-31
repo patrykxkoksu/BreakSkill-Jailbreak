@@ -500,6 +500,8 @@ function BreakSkill:CreateWindow(title, themelist)
         function Sections:CreateSection(name, hidden)
             
         end
+
+        return Sections
     end
 
     return Tabs
