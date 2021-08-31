@@ -127,7 +127,7 @@ local Themes = {
         SchemeColor = Color3.fromRGB(230, 35, 69),
         Background = Color3.fromRGB(11, 11, 18),
         Header = Color3.fromRGB(74, 74, 74),
-        TextColor3 = Color3.fromRGB(255, 255, 255),
+        TextColor3 = Color3.fromRGB(255, 40, 30),
         ElementColor = Color3.fromRGB(24, 24, 24)
     }
 }
