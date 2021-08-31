@@ -127,7 +127,7 @@ local Themes = {
         SchemeColor = Color3.fromRGB(230, 35, 69),
         Background = Color3.fromRGB(11, 11, 18),
         Header = Color3.fromRGB(5, 5, 5),
-        TextColor3 = Color3.fromRGB(255, 40, 30),
+        TextColor3 = Color3.fromRGB(255, 255, 255),
         ElementColor = Color3.fromRGB(24, 24, 24)
     }
 }
@@ -288,7 +288,7 @@ function BreakSkill:CreateWindow(title, themelist)
     Title.Font = Enum.Font.Gotham
     Title.RichText = true
     Title.Text = title
-    Title.TextColor3 = Color3.fromRGB(245, 245, 245)
+    Title.TextColor3 = Color3.fromRGB(255, 30, 40)
     Title.TextSize = 16.000
     Title.TextXAlignment = Enum.TextXAlignment.Left
 
