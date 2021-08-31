@@ -1,10 +1,4 @@
---[
---UI Library
---]
-
-local BreakSkill = {}
-
---Instances
+local Kavo = {}
 
 local tween = game:GetService("TweenService")
 local tweeninfo = TweenInfo.new
@@ -13,12 +7,11 @@ local run = game:GetService("RunService")
 
 local Utility = {}
 local Objects = {}
-
---Functions
-
-function BreakSkill:DraggingEnabled(frame, parent)
+function Kavo:DraggingEnabled(frame, parent)
+        
     parent = parent or frame
-
+    
+    -- stolen from wally or kiriot, kek
     local dragging = false
     local dragInput, mousePos, framePos
 
@@ -27,7 +20,7 @@ function BreakSkill:DraggingEnabled(frame, parent)
             dragging = true
             mousePos = input.Position
             framePos = parent.Position
-
+            
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then
                     dragging = false
@@ -54,7 +47,6 @@ function Utility:TweenObject(obj, properties, duration, ...)
     tween:Create(obj, tweeninfo(duration, ...), properties):Play()
 end
 
---Themes
 
 local themes = {
     SchemeColor = Color3.fromRGB(74, 99, 135),
@@ -135,15 +127,13 @@ local themeStyles = {
         ElementColor = Color3.fromRGB(24, 24, 24)
     }
 }
-
-
 local oldTheme = ""
 
 local SettingsT = {
 
 }
 
-local Name = "BreakSkill Hub/BreakSkill Hub UI.txt"
+local Name = "KavoConfig.JSON"
 
 pcall(function()
 
@@ -154,11 +144,9 @@ end
 Settings = game:service'HttpService':JSONEncode(readfile(Name))
 end)
 
---UI Functions
-
 local LibName = tostring(math.random(1, 100))..tostring(math.random(1,50))..tostring(math.random(1, 100))
 
-function BreakSkill:ToggleUI()
+function Kavo:ToggleUI()
     if game.CoreGui[LibName].Enabled then
         game.CoreGui[LibName].Enabled = false
     else
@@ -166,7 +154,7 @@ function BreakSkill:ToggleUI()
     end
 end
 
-function BreakSkill:CreateWindow(Name, themeList)
+function Kavo.CreateLib(kavName, themeList)
     if not themeList then
         themeList = themes
     end
@@ -205,16 +193,14 @@ function BreakSkill:CreateWindow(Name, themeList)
     end
 
     themeList = themeList or {}
-    local selectedTab
-    Name = Name or "Break-Skill Hub"
-    table.insert(BreakSkill, Name)
-
+    local selectedTab 
+    kavName = kavName or "Library"
+    table.insert(Kavo, kavName)
     for i,v in pairs(game.CoreGui:GetChildren()) do
-        if v:IsA("ScreenGui") and v.Name == Name then
+        if v:IsA("ScreenGui") and v.Name == kavName then
             v:Destroy()
         end
     end
-
     local ScreenGui = Instance.new("ScreenGui")
     local Main = Instance.new("Frame")
     local MainCorner = Instance.new("UICorner")
@@ -231,9 +217,10 @@ function BreakSkill:CreateWindow(Name, themeList)
     local pages = Instance.new("Frame")
     local Pages = Instance.new("Folder")
     local infoContainer = Instance.new("Frame")
+
     local blurFrame = Instance.new("Frame")
 
-    BreakSkill:DraggingEnabled(MainHeader, Main)
+    Kavo:DraggingEnabled(MainHeader, Main)
 
     blurFrame.Name = "blurFrame"
     blurFrame.Parent = pages
@@ -286,7 +273,7 @@ function BreakSkill:CreateWindow(Name, themeList)
     title.Size = UDim2.new(0, 204, 0, 8)
     title.Font = Enum.Font.Gotham
     title.RichText = true
-    title.Text = Name
+    title.Text = kavName
     title.TextColor3 = Color3.fromRGB(245, 245, 245)
     title.TextSize = 16.000
     title.TextXAlignment = Enum.TextXAlignment.Left
@@ -300,16 +287,16 @@ function BreakSkill:CreateWindow(Name, themeList)
     close.Image = "rbxassetid://3926305904"
     close.ImageRectOffset = Vector2.new(284, 4)
     close.ImageRectSize = Vector2.new(24, 24)
-
     close.MouseButton1Click:Connect(function()
-        game.TweenService:Create(close, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {ImageTransparency = 1}):Play()
-
+        game.TweenService:Create(close, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+            ImageTransparency = 1
+        }):Play()
         wait()
-
-        game.TweenService:Create(Main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0,0,0,0), Position = UDim2.new(0, Main.AbsolutePosition.X + (Main.AbsoluteSize.X / 2), 0, Main.AbsolutePosition.Y + (Main.AbsoluteSize.Y / 2))}):Play()
-
+        game.TweenService:Create(Main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = UDim2.new(0,0,0,0),
+			Position = UDim2.new(0, Main.AbsolutePosition.X + (Main.AbsoluteSize.X / 2), 0, Main.AbsolutePosition.Y + (Main.AbsoluteSize.Y / 2))
+		}):Play()
         wait(1)
-
         ScreenGui:Destroy()
     end)
 
@@ -363,6 +350,7 @@ function BreakSkill:CreateWindow(Name, themeList)
     infoContainer.Position = UDim2.new(0.299047619, 0, 0.874213815, 0)
     infoContainer.Size = UDim2.new(0, 368, 0, 33)
 
+    
     coroutine.wrap(function()
         while wait() do
             Main.BackgroundColor3 = themeList.Background
@@ -373,7 +361,7 @@ function BreakSkill:CreateWindow(Name, themeList)
         end
     end)()
 
-    function BreakSkill:ChangeColor(prope,color)
+    function Kavo:ChangeColor(prope,color)
         if prope == "Background" then
             themeList.Background = color
         elseif prope == "SchemeColor" then
@@ -386,15 +374,11 @@ function BreakSkill:CreateWindow(Name, themeList)
             themeList.ElementColor = color
         end
     end
-
     local Tabs = {}
+
     local first = true
 
-    --[
-    --CreateTab
-    --]
-
-    function Tabs:CreateTab(tabName)
+    function Tabs:NewTab(tabName)
         tabName = tabName or "Tab"
         local tabButton = Instance.new("TextButton")
         local UICorner = Instance.new("UICorner")
@@ -403,7 +387,10 @@ function BreakSkill:CreateWindow(Name, themeList)
 
         local function UpdateSize()
             local cS = pageListing.AbsoluteContentSize
-            game.TweenService:Create(page, TweenInfo.new(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {CanvasSize = UDim2.new(0,cS.X,0,cS.Y)}):Play()
+
+            game.TweenService:Create(page, TweenInfo.new(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+                CanvasSize = UDim2.new(0,cS.X,0,cS.Y)
+            }):Play()
         end
 
         page.Name = "Page"
@@ -448,43 +435,36 @@ function BreakSkill:CreateWindow(Name, themeList)
         UICorner.CornerRadius = UDim.new(0, 5)
         UICorner.Parent = tabButton
         table.insert(Tabs, tabName)
+
         UpdateSize()
         page.ChildAdded:Connect(UpdateSize)
         page.ChildRemoved:Connect(UpdateSize)
 
         tabButton.MouseButton1Click:Connect(function()
             UpdateSize()
-
             for i,v in next, Pages:GetChildren() do
                 v.Visible = false
             end
-
             page.Visible = true
-
-            for i, v in next, tabFrames:GetChildren() do
+            for i,v in next, tabFrames:GetChildren() do
                 if v:IsA("TextButton") then
-                    if themeList.SchemeColor == Color3.fromRGB(255, 255, 255) then
-                        Utility:TweenObject(v, {TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
-                    end
-
-                    if themeList.SchemeColor == Color3.fromRGB(0, 0, 0) then
-                        Utility:TweenObject(v, {TextColor3 = Color3.fromRGB(0, 0, 0)}, 0.2)
-                    end
-
+                    if themeList.SchemeColor == Color3.fromRGB(255,255,255) then
+                        Utility:TweenObject(v, {TextColor3 = Color3.fromRGB(255,255,255)}, 0.2)
+                    end 
+                    if themeList.SchemeColor == Color3.fromRGB(0,0,0) then
+                        Utility:TweenObject(v, {TextColor3 = Color3.fromRGB(0,0,0)}, 0.2)
+                    end 
                     Utility:TweenObject(v, {BackgroundTransparency = 1}, 0.2)
                 end
             end
-            if themeList.SchemeColor == Color3.fromRGB(255, 255, 255) then
+            if themeList.SchemeColor == Color3.fromRGB(255,255,255) then
                 Utility:TweenObject(tabButton, {TextColor3 = Color3.fromRGB(0,0,0)}, 0.2)
-            end
-
-            if themeList.SchemeColor == Color3.fromRGB(0, 0, 0) then
+            end 
+            if themeList.SchemeColor == Color3.fromRGB(0,0,0) then
                 Utility:TweenObject(tabButton, {TextColor3 = Color3.fromRGB(255,255,255)}, 0.2)
-            end
-
+            end 
             Utility:TweenObject(tabButton, {BackgroundTransparency = 0}, 0.2)
         end)
-
         local Sections = {}
         local focusing = false
         local viewDe = false
@@ -497,18 +477,12 @@ function BreakSkill:CreateWindow(Name, themeList)
                 tabButton.BackgroundColor3 = themeList.SchemeColor
             end
         end)()
-
-        --[
-        --CreateSection
-        --]
-
-        function Sections:CreateSection(secName, hidden)
+    
+        function Sections:NewSection(secName, hidden)
             secName = secName or "Section"
-            hidden = hidden or false
-
             local sectionFunctions = {}
             local modules = {}
-
+	    hidden = hidden or false
             local sectionFrame = Instance.new("Frame")
             local sectionlistoknvm = Instance.new("UIListLayout")
             local sectionHead = Instance.new("Frame")
@@ -516,24 +490,24 @@ function BreakSkill:CreateWindow(Name, themeList)
             local sectionName = Instance.new("TextLabel")
             local sectionInners = Instance.new("Frame")
             local sectionElListing = Instance.new("UIListLayout")
-
-	        if hidden then
-		        sectionHead.Visible = false
-	        else
-		        sectionHead.Visible = true
-	        end
+			
+	    if hidden then
+		sectionHead.Visible = false
+	    else
+		sectionHead.Visible = true
+	    end
 
             sectionFrame.Name = "sectionFrame"
             sectionFrame.Parent = page
             sectionFrame.BackgroundColor3 = themeList.Background--36, 37, 43
             sectionFrame.BorderSizePixel = 0
-
+            
             sectionlistoknvm.Name = "sectionlistoknvm"
             sectionlistoknvm.Parent = sectionFrame
             sectionlistoknvm.SortOrder = Enum.SortOrder.LayoutOrder
             sectionlistoknvm.Padding = UDim.new(0, 5)
 
-            for i, v in pairs(sectionInners:GetChildren()) do
+            for i,v in pairs(sectionInners:GetChildren()) do
                 while wait() do
                     if v:IsA("Frame") or v:IsA("TextButton") then
                         function size(pro)
@@ -546,7 +520,6 @@ function BreakSkill:CreateWindow(Name, themeList)
                     end
                 end
             end
-
             sectionHead.Name = "sectionHead"
             sectionHead.Parent = sectionFrame
             sectionHead.BackgroundColor3 = themeList.SchemeColor
@@ -571,15 +544,13 @@ function BreakSkill:CreateWindow(Name, themeList)
             Objects[sectionName] = "TextColor3"
             sectionName.TextSize = 14.000
             sectionName.TextXAlignment = Enum.TextXAlignment.Left
-
-            if themeList.SchemeColor == Color3.fromRGB(255, 255, 255) then
-                Utility:TweenObject(sectionName, {TextColor3 = Color3.fromRGB(0, 0, 0)}, 0.2)
-            end
-
-            if themeList.SchemeColor == Color3.fromRGB(0, 0, 0) then
-                Utility:TweenObject(sectionName, {TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
-            end
-
+            if themeList.SchemeColor == Color3.fromRGB(255,255,255) then
+                Utility:TweenObject(sectionName, {TextColor3 = Color3.fromRGB(0,0,0)}, 0.2)
+            end 
+            if themeList.SchemeColor == Color3.fromRGB(0,0,0) then
+                Utility:TweenObject(sectionName, {TextColor3 = Color3.fromRGB(255,255,255)}, 0.2)
+            end 
+               
             sectionInners.Name = "sectionInners"
             sectionInners.Parent = sectionFrame
             sectionInners.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -591,15 +562,16 @@ function BreakSkill:CreateWindow(Name, themeList)
             sectionElListing.SortOrder = Enum.SortOrder.LayoutOrder
             sectionElListing.Padding = UDim.new(0, 3)
 
-            coroutine.wrap(function()
-                while wait() do
-                    sectionFrame.BackgroundColor3 = themeList.Background
-                    sectionHead.BackgroundColor3 = themeList.SchemeColor
-                    tabButton.TextColor3 = themeList.TextColor
-                    tabButton.BackgroundColor3 = themeList.SchemeColor
-                    sectionName.TextColor3 = themeList.TextColor
-                end
-            end)()
+            
+        coroutine.wrap(function()
+            while wait() do
+                sectionFrame.BackgroundColor3 = themeList.Background
+                sectionHead.BackgroundColor3 = themeList.SchemeColor
+                tabButton.TextColor3 = themeList.TextColor
+                tabButton.BackgroundColor3 = themeList.SchemeColor
+                sectionName.TextColor3 = themeList.TextColor
+            end
+        end)()
 
             local function updateSectionFrame()
                 local innerSc = sectionElListing.AbsoluteContentSize
@@ -607,16 +579,9 @@ function BreakSkill:CreateWindow(Name, themeList)
                 local frameSc = sectionlistoknvm.AbsoluteContentSize
                 sectionFrame.Size = UDim2.new(0, 352, 0, frameSc.Y)
             end
-
-            updateSectionFrame()
-            UpdateSize()
-
+                updateSectionFrame()
+                UpdateSize()
             local Elements = {}
-
-            --[
-            --AddButton
-            --]
-
             function Elements:NewButton(bname,tipINf, callback)
                 showLogo = showLogo or true
                 local ButtonFunction = {}
@@ -2677,13 +2642,13 @@ function BreakSkill:CreateWindow(Name, themeList)
                 	if label.Text ~= "  "..newText then
                 		label.Text = "  "..newText
                 	end
-                end
+                end	
                 return labelFunctions
-            end
+            end	
             return Elements
         end
         return Sections
-    end
+    end  
     return Tabs
 end
-return BreakSkill
+return Kavo
