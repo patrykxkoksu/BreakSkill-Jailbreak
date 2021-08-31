@@ -502,7 +502,26 @@ function BreakSkill:CreateWindow(title, themelist)
         --CreateSection
         --]
 
-        
+        function Sections:CreateSection(secName, hidden)
+            secName = secName or "Section"
+            hidden = hidden or false
+
+            local sectionFrame = Instance.new("Frame")
+            local sectionlistoknvm = Instance.new("UIListLayout")
+            local sectionHead = Instance.new("Frame")
+            local sHeadCorner = Instance.new("UICorner")
+            local sectionName = Instance.new("TextLabel")
+            local sectionInners = Instance.new("Frame")
+            local sectionElListing = Instance.new("UIListLayout")
+
+            if hidden then
+                sectionHead.Visible = false
+            else
+                sectionHead.Visible = true
+            end
+
+            
+        end
 
         return Sections
     end
