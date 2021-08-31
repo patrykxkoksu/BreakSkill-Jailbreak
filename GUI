@@ -451,32 +451,37 @@ function BreakSkill:CreateWindow(title, themelist)
         page.ChildAdded:Connect(UpdateSize)
         page.ChildRemoved:Connect(UpdateSize)
 
-        tabButton.MouseButton1Click:Connect(function ()
+        tabButton.MouseButton1Click:Connect(function()
             UpdateSize()
 
-            for i, v in next, Pages:GetChildren() do
+            for i,v in next, Pages:GetChildren() do
                 v.Visible = false
             end
 
             page.Visible = true
 
-            for i, v in next, tabFrames:GetChildren() do
+            for i,v in next, tabFrames:GetChildren() do
                 if v:IsA("TextButton") then
                     if themelist.SchemeColor == Color3.fromRGB(255, 255, 255) then
                         Utility:TweenObject(v, {TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
                     end
+
                     if themelist.SchemeColor == Color3.fromRGB(0, 0, 0) then
                         Utility:TweenObject(v, {TextColor3 = Color3.fromRGB(0, 0, 0)}, 0.2)
                     end
+
                     Utility:TweenObject(v, {BackgroundTransparency = 1}, 0.2)
                 end
             end
+
             if themelist.SchemeColor == Color3.fromRGB(255, 255, 255) then
                 Utility:TweenObject(tabButton, {TextColor3 = Color3.fromRGB(0, 0, 0)}, 0.2)
             end
+
             if themelist.SchemeColor == Color3.fromRGB(0, 0, 0) then
                 Utility:TweenObject(tabButton, {TextColor3 = Color3.fromRGB(255, 255, 255)}, 0.2)
             end
+
             Utility:TweenObject(tabButton, {BackgroundTransparency = 0}, 0.2)
         end)
 
@@ -499,6 +504,7 @@ function BreakSkill:CreateWindow(title, themelist)
 
         
 
+        return Sections
     end
 
     return Tabs
