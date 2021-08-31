@@ -485,6 +485,10 @@ function BreakSkill:CreateWindow(title, themelist)
             Utility:TweenObject(tabButton, {BackgroundTransparency = 0}, 0.2)
         end)
 
+        local Sections = {}
+        local focusing = false
+        local viewDe = false
+
         coroutine.wrap(function ()
             while wait() do
                 page.BackgroundColor3 = themelist.Background
@@ -493,10 +497,6 @@ function BreakSkill:CreateWindow(title, themelist)
                 tabButton.BackgroundColor3 = themelist.SchemeColor
             end
         end)()
-
-        local Sections = {}
-        local focusing = false
-        local viewDe = false
 
         --[
         --CreateSection
