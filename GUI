@@ -497,9 +497,7 @@ function BreakSkill:CreateWindow(title, themelist)
         --CreateSection
         --]
 
-        function Sections:CreateSection(name, hidden)
-            
-        end
+        
 
         return Sections
     end
