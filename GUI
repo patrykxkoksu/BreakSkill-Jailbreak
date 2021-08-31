@@ -499,7 +499,6 @@ function BreakSkill:CreateWindow(title, themelist)
 
         
 
-        return Sections
     end
 
     return Tabs
