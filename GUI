@@ -171,7 +171,19 @@ function BreakSkill:CreateWindow(title)
     coverup.Size = UDim2.new(0, 550, 0, 7)
     Objects[coverup] = "BackgroundColor3"
 
-    
+    Title.Name = "title"
+    Title.Parent = MainHeader
+    Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Title.BackgroundTransparency = 1.000
+    Title.BorderSizePixel = 0
+    Title.Position = UDim2.new(0.0171428565, 0, 0.344827592, 0)
+    Title.Size = UDim2.new(0, 204, 0, 8)
+    Title.Font = Enum.Font.Gotham
+    Title.RichText = true
+    Title.Text = title
+    Title.TextColor3 = Color3.fromRGB(245, 245, 245)
+    Title.TextSize = 16.000
+    Title.TextXAlignment = Enum.TextXAlignment.Left
 end
 
 return BreakSkill
