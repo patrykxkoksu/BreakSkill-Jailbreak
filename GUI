@@ -171,7 +171,7 @@ function BreakSkill:CreateWindow(title)
     coverup.Size = UDim2.new(0, 550, 0, 7)
     Objects[coverup] = "BackgroundColor3"
 
-
+    
 end
 
 return BreakSkill
