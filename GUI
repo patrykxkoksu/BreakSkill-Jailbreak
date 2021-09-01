@@ -152,6 +152,12 @@ function BreakSkill:CreateWindow(title)
     MainCorner.CornerRadius = UDim.new(0, 4)
     MainCorner.Name = "MainCorner"
     MainCorner.Parent = Main
+
+    MainHeader.Name = "MainHeader"
+    MainHeader.Parent = Main
+    MainHeader.BackgroundColor3 = Theme.Header
+    MainHeader.Size = UDim2.new(0, 550, 0, 29)
+    Objects[MainHeader] = "BackgroundColor3"
 end
 
 return BreakSkill
