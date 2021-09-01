@@ -156,7 +156,7 @@ function BreakSkill:CreateWindow(title)
     MainHeader.Name = "MainHeader"
     MainHeader.Parent = Main
     MainHeader.BackgroundColor3 = Theme.Header
-    MainHeader.Size = UDim2.new(0, 550, 0, 29)
+    MainHeader.Size = UDim2.new(0, 575, 0, 29)
     Objects[MainHeader] = "BackgroundColor3"
 
     headerCover.CornerRadius = UDim.new(0, 4)
@@ -168,7 +168,7 @@ function BreakSkill:CreateWindow(title)
     coverup.BackgroundColor3 = Theme.Header
     coverup.BorderSizePixel = 0
     coverup.Position = UDim2.new(0, 0, 0.758620679, 0)
-    coverup.Size = UDim2.new(0, 550, 0, 7)
+    coverup.Size = UDim2.new(0, 575, 0, 7)
     Objects[coverup] = "BackgroundColor3"
 
     Title.Name = "title"
