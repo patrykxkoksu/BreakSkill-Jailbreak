@@ -159,7 +159,9 @@ function BreakSkill:CreateWindow(title)
     MainHeader.Size = UDim2.new(0, 550, 0, 29)
     Objects[MainHeader] = "BackgroundColor3"
 
-    
+    headerCover.CornerRadius = UDim.new(0, 4)
+    headerCover.Name = "headerCover"
+    headerCover.Parent = MainHeader
 end
 
 return BreakSkill
