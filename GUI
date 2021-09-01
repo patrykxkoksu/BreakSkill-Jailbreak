@@ -178,11 +178,11 @@ function BreakSkill:CreateWindow(title)
     Title.BorderSizePixel = 0
     Title.Position = UDim2.new(0.0171428565, 0, 0.344827592, 0)
     Title.Size = UDim2.new(0, 204, 0, 8)
-    Title.Font = Enum.Font.Gotham
+    Title.Font = Enum.Font.SourceSansBold
     Title.RichText = true
     Title.Text = title
     Title.TextColor3 = Color3.fromRGB(245, 245, 245)
-    Title.TextSize = 16.000
+    Title.TextSize = 18
     Title.TextXAlignment = Enum.TextXAlignment.Left
 end
 
