@@ -207,7 +207,7 @@ function BreakSkill:CreateWindow(title)
     MainSide.Parent = Main
     MainSide.BackgroundColor3 = Theme.Header
     MainSide.Position = UDim2.new(-7.4505806e-09, 0, 0.0911949649, 0)
-    MainSide.Size = UDim2.new(0, 175, 0, 450)
+    MainSide.Size = UDim2.new(0, 175, 0, 500)
     Objects[MainSide] = "Header"
 
     sideCorner.CornerRadius = UDim.new(0, 4)
@@ -308,7 +308,10 @@ function BreakSkill:CreateWindow(title)
         page.Visible = false
         page.ScrollBarImageColor3 = Color3.fromRGB(Theme.SchemeColor.r * 255 - 16, Theme.SchemeColor.g * 255 - 15, Theme.SchemeColor.b * 255 - 28)
 
-
+        pageListing.Name = "pageListing"
+        pageListing.Parent = page
+        pageListing.SortOrder = Enum.SortOrder.LayoutOrder
+        pageListing.Padding = UDim.new(0, 5)
     end
     return Tabs
 end
