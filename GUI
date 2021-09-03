@@ -312,6 +312,19 @@ function BreakSkill:CreateWindow(title)
         pageListing.Parent = page
         pageListing.SortOrder = Enum.SortOrder.LayoutOrder
         pageListing.Padding = UDim.new(0, 5)
+
+        tabButton.Name = title.."TabButton"
+        tabButton.Parent = tabFrames
+        tabButton.BackgroundColor3 = Theme.SchemeColor
+        tabButton.Size = UDim2.new(0, 135, 0, 28)
+        tabButton.AutoButtonColor = false
+        tabButton.Font = Enum.Font.Gotham
+        tabButton.Text = title
+        tabButton.TextColor3 = Theme.TextColor
+        tabButton.TextSize = 14.000
+        tabButton.BackgroundTransparency = 1
+        Objects[tabButton] = "TextColor3"
+        Objects[tabButton] = "SchemeColor"
     end
     return Tabs
 end
