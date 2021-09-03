@@ -277,7 +277,8 @@ function BreakSkill:CreateWindow(title)
         end
     end
 
-
+    local Tabs = {}
+    local first = true
 end
 
 return BreakSkill
