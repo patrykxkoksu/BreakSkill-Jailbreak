@@ -207,7 +207,7 @@ function BreakSkill:CreateWindow(title)
     MainSide.Parent = Main
     MainSide.BackgroundColor3 = Theme.Header
     MainSide.Position = UDim2.new(-7.4505806e-09, 0, 0.0911949649, 0)
-    MainSide.Size = UDim2.new(0, 200, 0, 289)
+    MainSide.Size = UDim2.new(0, 175, 0, 350)
     Objects[MainSide] = "Header"
 
     sideCorner.CornerRadius = UDim.new(0, 4)
@@ -240,6 +240,44 @@ function BreakSkill:CreateWindow(title)
     pages.BorderSizePixel = 0
     pages.Position = UDim2.new(0.299047589, 0, 0.122641519, 0)
     pages.Size = UDim2.new(0, 360, 0, 269)
+
+    Pages.Name = "Pages"
+    Pages.Parent = pages
+
+    infoContainer.Name = "infoContainer"
+    infoContainer.Parent = Main
+    infoContainer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    infoContainer.BackgroundTransparency = 1.000
+    infoContainer.BorderColor3 = Color3.fromRGB(27, 42, 53)
+    infoContainer.ClipsDescendants = true
+    infoContainer.Position = UDim2.new(0.299047619, 0, 0.874213815, 0)
+    infoContainer.Size = UDim2.new(0, 368, 0, 33)
+
+    coroutine.wrap(function ()
+        while wait() do
+            Main.BackgroundColor3 = Theme.Background
+            MainHeader.BackgroundColor3 = Theme.Header
+            MainSide.BackgroundColor3 = Theme.Header
+            coverup.BackgroundColor3 = Theme.Header
+            coverup_2.BackgroundColor3 = Theme.Header
+        end
+    end)()
+
+    function BreakSkill:ChangeColor(prope, color)
+        if prope == "Background" then
+            Theme.Background = color
+        elseif prope == "SchemeColor" then
+            Theme.SchemeColor = color
+        elseif prope == "Header" then
+            Theme.Header = color
+        elseif prope == "TextColor" then
+            Theme.TextColor3 = color
+        elseif prope == "ElementColor" then
+            Theme.ElementColor = color
+        end
+    end
+
+    
 end
 
 return BreakSkill
