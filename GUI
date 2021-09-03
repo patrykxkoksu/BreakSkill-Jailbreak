@@ -279,6 +279,37 @@ function BreakSkill:CreateWindow(title)
 
     local Tabs = {}
     local first = true
-end
 
+    --[
+    --CreateTab
+    --]
+
+    function Tabs:CreateTab(title)
+        title = title or "Tab"
+
+        local tabButton = Instance.new("TextButton")
+        local UICorner = Instance.new("UICorner")
+        local page = Instance.new("ScrollingFrame")
+        local pageListing = Instance.new("UIListLayout")
+
+        local function UpdateSize()
+            local CS = pageListing.AbsoluteContentSize
+            game.TweenService:Create(page, TweenInfo.new(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {CanvasSize = UDim2.new(0, CS.X, 0, CS.Y)}):Play()
+        end
+
+        page.Name = "Page"
+        page.Parent = Pages
+        page.Active = true
+        page.BackgroundColor3 = Theme.Background
+        page.BorderSizePixel = 0
+        page.Position = UDim2.new(0, 0, -0.00371747208, 0)
+        page.Size = UDim2.new(1, 0, 1, 0)
+        page.ScrollBarThickness = 5
+        page.Visible = false
+        page.ScrollBarImageColor3 = Color3.fromRGB(Theme.SchemeColor.r * 255 - 16, Theme.SchemeColor.g * 255 - 15, Theme.SchemeColor.b * 255 - 28)
+
+
+    end
+    return Tabs
+end
 return BreakSkill
